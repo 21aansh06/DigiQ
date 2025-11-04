@@ -29,6 +29,13 @@ const [phone, setPhone] = useState("");
 const [otpSent, setOtpSent] = useState(false);
 const [otp, setOtp] = useState("");
 const [selectedQueueId, setSelectedQueueId] = useState(null);
+  if (!userData) {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-700 text-xl font-semibold">
+      Loading Dashboard...
+    </main>
+  );
+}
 
 
   useEffect(() => {
@@ -130,6 +137,9 @@ const joinQueueAfterOtp = async (id) => {
 
   const showOrgDashboardButton =
     userData.role === "organization" && organization;
+  
+
+
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900 font-sans">
