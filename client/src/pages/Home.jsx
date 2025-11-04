@@ -82,7 +82,7 @@ const LandingPage = () => {
         <p className="text-gray-600 mb-6 text-sm max-w-xl mx-auto">
           Join QueueLess and experience hassle-free, modern queue management.
         </p>
-        <a href="/signup" className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition">
+        <a href="/register" className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition">
           Get Started
         </a>
       </section>
