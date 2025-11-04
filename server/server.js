@@ -16,7 +16,7 @@ const PORT = process.env.PORT
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
-const allowedOrigins = ["https://digi-q-ivory.vercel.app"]
+const allowedOrigins = ["https://digi-q-ivory.vercel.app" ,"http://localhost:5173" ]
 app.use(cors({credentials: true , origin: allowedOrigins}))
 
 app.use("/api/auth/user" , userRouter)
