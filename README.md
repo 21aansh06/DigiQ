@@ -49,11 +49,10 @@ If 3 people are in the queue —
 
 | Layer | Technology |
 |-------|-------------|
-| *Frontend* | React.js, Tailwind CSS / CSS |
+| *Frontend* | React.js, Tailwind CSS |
 | *Backend* | Node.js, Express.js |
-| *Database* | MongoDB |
+| *Database* | MongoDB Atlas |
 | *API Communication* | REST API |
 | *QR Code Generation* | qrcode npm package |
-| *Real-Time Updates* | Socket.io (optional for live updates) |
 
 ---
