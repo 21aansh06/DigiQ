@@ -24,6 +24,11 @@ const orgTypeOptions = [
   { value: 'clinic', label: 'Clinic' },
 ];
 
+const userRoleOptions = [
+  { value: 'serviceUser', label: 'Customer' },
+  { value: 'organization', label: 'Organization' },
+];
+
 export function RegisterForm({ type }: RegisterFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +40,7 @@ export function RegisterForm({ type }: RegisterFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [role, setRole] = useState<'serviceUser' | 'organization'>('serviceUser');
 
   const [address, setAddress] = useState('');
   const [orgType, setOrgType] = useState<OrgType>('hospital');
@@ -51,6 +57,7 @@ export function RegisterForm({ type }: RegisterFormProps) {
           email,
           password,
           phone,
+          role,
         });
         if (response.success) {
           router.push('/login');
@@ -120,17 +127,29 @@ export function RegisterForm({ type }: RegisterFormProps) {
           </div>
 
           {type === 'user' && (
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="+1 234 567 890"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </div>
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+1 234 567 890"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="role">Account Type</Label>
+                <Select
+                  id="role"
+                  options={userRoleOptions}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as any)}
+                  required
+                />
+              </div>
+            </>
           )}
 
           {type === 'org' && (

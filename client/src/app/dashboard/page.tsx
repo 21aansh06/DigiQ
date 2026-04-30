@@ -7,15 +7,18 @@ import { ProtectedRoute } from '@/components/auth/protected-route';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { queueService } from '@/services/api';
+import { queueService, authService } from '@/services/api';
 import { QueueWithDetails } from '@/types';
 import { getStatusColor, getStatusLabel, formatRelativeTime } from '@/lib/utils';
-import { Clock, MapPin, Users, ArrowRight } from 'lucide-react';
+import { Clock, MapPin, Users, ArrowRight, Building } from 'lucide-react';
+import { useAuthStore } from '@/store/authStore';
 
 function DashboardPage() {
+  const { user } = useAuthStore();
   const [activeQueues, setActiveQueues] = useState<QueueWithDetails[]>([]);
   const [completedCount, setCompletedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasOrg, setHasOrg] = useState<boolean | null>(null);
 
   useEffect(() => {
     const fetchUserQueues = async () => {
@@ -39,7 +42,19 @@ function DashboardPage() {
     };
 
     fetchUserQueues();
-  }, []);
+
+    if (user?.role === 'organization') {
+      authService.getMyOrg().then((res) => {
+        if (res.success && res.organization) {
+          setHasOrg(true);
+        } else {
+          setHasOrg(false);
+        }
+      }).catch(() => {
+        setHasOrg(false);
+      });
+    }
+  }, [user]);
 
   return (
     <DashboardLayout role="user">
@@ -49,6 +64,39 @@ function DashboardPage() {
           <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
           <p className="text-slate-600 mt-2">Manage your queue positions and explore services</p>
         </div>
+
+        {user?.role === 'organization' && (
+          <Card className="bg-blue-50 border-blue-200">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl text-blue-900 flex items-center gap-2">
+                <Building className="h-5 w-5" />
+                Organization Management
+              </CardTitle>
+              <CardDescription className="text-blue-700">
+                You have an organization account. Manage your services and queues here.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {hasOrg === true ? (
+                <Link href="/org/dashboard">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+                    Manage Service
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              ) : hasOrg === false ? (
+                <Link href="/org/register">
+                  <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700">
+                    Create
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              ) : (
+                <div className="text-sm text-blue-600">Loading organization status...</div>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Stats Grid */}
         <div className="grid gap-6 md:grid-cols-3">

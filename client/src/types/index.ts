@@ -16,8 +16,9 @@ export interface UserLoginInput {
 export interface UserRegisterInput {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   phone: string;
+  role?: 'serviceUser' | 'organization';
 }
 
 // Organization Types

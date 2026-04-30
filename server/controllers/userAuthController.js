@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 import User from "../models/userModel.js"
 
 export const registerUser = async(req,res)=>{
-    let {email,name , password , phone} = req.body
+    let {email,name , password , phone, role} = req.body
     if(!email || !name || !password){
         return res.json({success:false , message:"Fill all the details"})
     }
@@ -17,7 +17,8 @@ export const registerUser = async(req,res)=>{
             email:email,
             name:name,
             password:hashPassword,
-            phone
+            phone,
+            role: role || "serviceUser"
         })
 
         await newUser.save()

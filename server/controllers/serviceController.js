@@ -41,7 +41,7 @@ export const getOrgServices = async (req, res) => {
       return res.status(400).json({ success: false, message: "Organization ID is required" });
     }
 
-    const services = await Service.find({ organization: orgId });
+    const services = await Service.find({ organization: orgId, isActive: true });
 
     res.json({ success: true, services: services || [] });
   } catch (error) {
@@ -53,7 +53,7 @@ export const getOrgServices = async (req, res) => {
 //  Get All Services (for users)
 export const getAllServices = async (req, res) => {
   try {
-    const services = await Service.find()
+    const services = await Service.find({ isActive: true })
       .populate("organization", "name address")
       .sort({ createdAt: -1 });
 
@@ -85,6 +85,10 @@ export const updateService = async (req, res) => {
 
     const organization = await Organization.findById(service.organization._id);
 
+    if (organization._id.toString() !== req.org.id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized: You can only update your own services" });
+    }
+
     service.name = name || service.name;
     service.description = description || service.description;
 
@@ -113,16 +117,16 @@ export const deleteService = async (req, res) => {
 
     const organization = await Organization.findById(service.organization._id);
 
-    await service.deleteOne();
+    if (organization._id.toString() !== req.org.id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized: You can only delete your own services" });
+    }
 
-    organization.services = organization.services.filter(
-      (id) => id.toString() !== serviceId.toString()
-    );
-    await organization.save();
+    service.isActive = false;
+    await service.save();
 
     res.status(200).json({
       success: true,
-      message: "Service deleted successfully",
+      message: "Service deleted successfully (soft deleted)",
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

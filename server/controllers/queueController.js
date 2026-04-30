@@ -152,6 +152,10 @@ export const getOrgQueues = async (req, res) => {
   try {
     const { orgId } = req.params;
 
+    if (orgId.toString() !== req.org.id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized: You can only view your own organization's queues" });
+    }
+
     const queues = await Queue.find({ organization: orgId })
       .populate("user", "name email phone")
       .populate("service", "name avgTime");

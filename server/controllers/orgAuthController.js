@@ -5,6 +5,10 @@ import QRCode from "qrcode";
 
 export const registerOrg = async (req, res) => {
     try {
+        if (req.user.role !== 'organization') {
+             return res.json({ success: false, message: "Only users with the organization role can create an organization" });
+        }
+
         const { name, email, password, address, type } = req.body;
         if (!email || !name || !password || !address || !type) {
             return res.json({ success: false, message: "Provide all details" })
@@ -74,6 +78,15 @@ export const getOrgProfile = async (req, res) => {
         if (!organization) {
             return res.json({ success: false, message: "Organization not found" });
         }
+        res.json({ success: true, organization });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+};
+
+export const getMyOrg = async (req, res) => {
+    try {
+        const organization = await Organization.findOne({ createdBy: req.user.id });
         res.json({ success: true, organization });
     } catch (error) {
         res.json({ success: false, message: error.message });

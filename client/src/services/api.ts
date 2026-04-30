@@ -82,6 +82,11 @@ export const authService = {
     return response.data;
   },
 
+  getMyOrg: async (): Promise<{ success: boolean; organization: Organization | null }> => {
+    const response = await apiClient.get('/auth/org/my-org');
+    return response.data;
+  },
+
   generateQRCode: async (orgId: string): Promise<{ success: boolean; qrCode: string }> => {
     const response = await apiClient.get(`/auth/org/qrcode/${orgId}`);
     return response.data;

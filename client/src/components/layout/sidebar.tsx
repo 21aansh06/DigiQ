@@ -102,7 +102,11 @@ export function Sidebar({ role }: SidebarProps) {
           />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-slate-900 truncate">{name}</p>
-            <p className="text-xs text-slate-500 capitalize">{role === 'user' ? 'Service User' : 'Organization'}</p>
+            <p className="text-xs text-slate-500 capitalize">
+              {role === 'user' 
+                ? (user?.role === 'organization' ? 'Organization Owner' : 'Service User') 
+                : 'Organization Account'}
+            </p>
           </div>
         </div>
         <Button
