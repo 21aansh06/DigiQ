@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
 
   title: {
-    default: "DigiQ | Smart Real-Time Queue Management System",
+    default: "DigiQ | Real-Time B2B Queue Management SaaS",
     template: "%s | DigiQ",
   },
 
