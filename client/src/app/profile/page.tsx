@@ -138,7 +138,7 @@ function ProfilePage() {
 
               <div className="pt-4">
                 <p className="text-sm text-slate-500 italic">
-                  Profile editing is coming soon. Contact support to update your information.
+                  Profile editing is coming soon
                 </p>
               </div>
             </CardContent>

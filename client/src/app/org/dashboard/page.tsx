@@ -177,9 +177,9 @@ function OrgDashboardPage() {
               {activeQueues.slice(0, 5).map((queue) => (
                 <Card key={queue._id}>
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-4">
-                        <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">
+                        <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 shrink-0">
                           {(queue.user as any)?.name?.charAt(0).toUpperCase()}
                         </div>
                         <div>
@@ -189,7 +189,7 @@ function OrgDashboardPage() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto border-t pt-3 sm:border-t-0 sm:pt-0">
                         <Badge className={getStatusColor(queue.status)}>
                           {getStatusLabel(queue.status)}
                         </Badge>

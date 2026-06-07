@@ -171,12 +171,12 @@ function MyQueuesPage() {
                 return (
                   <Card key={queue._id} className="opacity-75">
                     <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div>
                           <p className="font-medium text-slate-900">{service?.name}</p>
                           <p className="text-sm text-slate-500">{org?.name}</p>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
                           <Badge className={getStatusColor(queue.status)}>
                             {getStatusLabel(queue.status)}
                           </Badge>

@@ -94,20 +94,22 @@ function OrgQueuesPage() {
   const QueueCard = ({ queue }: { queue: QueueWithDetails }) => (
     <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-4">
-        <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">
-            {getInitials((queue.user as any)?.name)}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700 shrink-0">
+              {getInitials((queue.user as any)?.name)}
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-slate-900 truncate">{(queue.user as any)?.name}</p>
+              <p className="text-sm text-slate-500 truncate">
+                {(queue.service as any)?.name} • Token #{queue.tokenNumber}
+              </p>
+              <p className="text-xs text-slate-400">{formatRelativeTime(queue.joinedAt)}</p>
+            </div>
           </div>
 
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-slate-900 truncate">{(queue.user as any)?.name}</p>
-            <p className="text-sm text-slate-500">
-              {(queue.service as any)?.name} • Token #{queue.tokenNumber}
-            </p>
-            <p className="text-xs text-slate-400">{formatRelativeTime(queue.joinedAt)}</p>
-          </div>
-
-          <div className="flex flex-col items-end gap-2">
+          <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 border-t pt-3 mt-1 sm:border-t-0 sm:pt-0 sm:mt-0 w-full sm:w-auto">
             <Badge className={getStatusColor(queue.status)}>
               {getStatusLabel(queue.status)}
             </Badge>

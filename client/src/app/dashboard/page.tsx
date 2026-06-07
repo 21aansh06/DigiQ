@@ -163,7 +163,7 @@ function DashboardPage() {
               {activeQueues.slice(0, 3).map((queue) => (
                 <Card key={queue._id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex-1">
                         <h3 className="font-semibold text-slate-900">
                           {(queue.service as any)?.name}
@@ -180,7 +180,7 @@ function DashboardPage() {
                           </span>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-left sm:text-right">
                         <p className="text-sm text-slate-500">Joined</p>
                         <p className="text-sm font-medium">{formatRelativeTime(queue.joinedAt)}</p>
                       </div>

@@ -129,12 +129,12 @@ function OrgServicesPage() {
     <DashboardLayout role="org">
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900">Services</h1>
             <p className="text-slate-600 mt-2">Manage your organization&apos;s services</p>
           </div>
-          <Button onClick={openAddDialog}>
+          <Button onClick={openAddDialog} className="w-full sm:w-auto">
             <Plus className="h-4 w-4 mr-2" />
             Add Service
           </Button>

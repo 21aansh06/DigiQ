@@ -173,6 +173,7 @@ export default function ServiceDetailPage() {
                 </div>
                 <Button
                   size="lg"
+                  className="w-full md:w-auto"
                   onClick={handleJoinQueue}
                   isLoading={isJoining}
                   disabled={!service.isActive || isAlreadyInQueue}
